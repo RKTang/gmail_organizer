@@ -1,0 +1,114 @@
+{
+  "query": "in:inbox newer_than:60d",
+  "max_results": 1000,
+  "auto_archive": true,
+  "auto_archive_labels": [
+    "Newsletters",
+    "Shopping"
+  ],
+  "rules": [
+    {
+      "name": "School",
+      "match": [
+        "university",
+        "college",
+        "course",
+        "exam",
+        "midterm",
+        "assignment",
+        "syllabus",
+        "office hours",
+        "lecture",
+        "student portal"
+      ],
+      "label": "School"
+    },
+    {
+      "name": "Jobs",
+      "match": [
+        "indeed",
+        "linkedin",
+        "job board",
+        "recruitment",
+        "recruiter",
+        "application",
+        "interview",
+        "career",
+        "resume",
+        "job posting",
+        "position",
+        "job",
+        "applicants",
+        "employment",
+        "qualification",
+        "requirements",
+        "hiring",
+        "talent"
+      ],
+      "label": "Jobs"
+    },
+    {
+      "name": "Finance",
+      "match": [
+        "transfer",
+        "e-transfer",
+        "payment",
+        "etransfer",
+        "deposit",
+        "transaction",
+        "bank",
+        "card",
+        "account",
+        "tax",
+        "refund",
+        "statement"
+      ],
+      "label": "Finance"
+    },
+    {
+      "name": "Newsletters",
+      "match": [
+        "unsubscribe",
+        "newsletter",
+        "digest",
+        "weekly",
+        "monthly",
+        "deals",
+        "coupons",
+        "discounts",
+        "savings",
+        "promo",
+        "offer",
+        "sale",
+        "discount",
+        "promotions",
+        "update"
+      ],
+      "label": "Newsletters"
+    },
+    {
+      "name": "Shopping",
+      "match": [
+        "order",
+        "shipped",
+        "delivery",
+        "tracking",
+        "receipt"
+      ],
+      "label": "Shopping"
+    }
+  ],
+  "default_label": "To-Review",
+  "ui": {
+    "theme": "default",
+    "font_size": 10,
+    "compact": false
+  },
+  "query_presets": [
+    "in:inbox newer_than:60d",
+    "in:inbox newer_than:30d",
+    "in:inbox -category:promotions newer_than:90d",
+    "in:inbox -category:social newer_than:90d",
+    "in:inbox has:attachment newer_than:120d"
+  ]
+}

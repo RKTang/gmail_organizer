@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gmail Organizer</title>
+    <meta
+      name="description"
+      content="A fast desktop Gmail organizer with smart labeling, selective auto-archive, and relabel workflows."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-content">
+        <div class="brand">Gmail Organizer</div>
+        <nav>
+          <a href="#features">Features</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#run">Run</a>
+          <a class="button-link" href="https://github.com/RKTang/gmail_organizer">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Desktop Gmail Automation</p>
+            <h1>Keep your inbox clean with smart labels and safe automation.</h1>
+            <p class="subtitle">
+              Gmail Organizer helps you classify emails with keyword rules, selectively archive low-risk categories,
+              and relabel mistakes in bulk.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#run">Get Started</a>
+              <a class="btn btn-ghost" href="https://github.com/RKTang/gmail_organizer">View Source</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <h3>What you get</h3>
+            <ul>
+              <li>Rule-based email labeling</li>
+              <li>Selective auto-archive by label</li>
+              <li>Interactive preview with row selection</li>
+              <li>Relabel workflow for corrections</li>
+              <li>Background scheduling every 2-4 hours</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section">
+        <div class="container">
+          <h2>Features</h2>
+          <div class="cards">
+            <article class="card">
+              <h3>Preview First</h3>
+              <p>See exactly what will change before applying updates to Gmail.</p>
+            </article>
+            <article class="card">
+              <h3>Selective Auto-Archive</h3>
+              <p>Archive only safe labels like Newsletters and Shopping, keep important labels in inbox.</p>
+            </article>
+            <article class="card">
+              <h3>Relabel Correction Mode</h3>
+              <p>Pick a label, re-run filters, and migrate incorrectly labeled emails to the right destination.</p>
+            </article>
+            <article class="card">
+              <h3>Undo History</h3>
+              <p>Every run is tracked so you can recover from mistakes quickly.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" class="section section-muted">
+        <div class="container">
+          <h2>Typical workflow</h2>
+          <ol class="steps">
+            <li>Connect Gmail once (OAuth).</li>
+            <li>Tune keyword rules in <code>data/gmail_rules.json</code>.</li>
+            <li>Run Preview, deselect anything uncertain, then Apply.</li>
+            <li>Use Relabel mode to fix misclassified emails.</li>
+            <li>Schedule headless runs every 2-4 hours via Task Scheduler.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="run" class="section">
+        <div class="container">
+          <h2>Run locally</h2>
+          <div class="codeblock">
+            <pre><code>python -m pip install -r requirements.txt
+python gmail_app.py
+
+# Optional headless scheduler run
+python gmail_run_once.py
+powershell -ExecutionPolicy Bypass -File .\schedule_gmail_task.ps1 -EveryHours 3</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-content">
+        <span>Built for practical inbox automation.</span>
+        <a href="https://github.com/RKTang/gmail_organizer">RKTang/gmail_organizer</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
