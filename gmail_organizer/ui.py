@@ -108,8 +108,14 @@ class GmailOrganizerApp(tk.Tk):
 
         ttk.Label(left, text="Scope").grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 6))
         ttk.Label(left, text="Query").grid(row=1, column=0, sticky="w", padx=(0, 8))
-        self.query_picker = ttk.Combobox(left, textvariable=self.query_var, state="normal")
+        self.query_picker = ttk.Combobox(
+            left,
+            textvariable=self.query_var,
+            state="normal",
+            postcommand=self._refresh_query_picker_values,
+        )
         self.query_picker.grid(row=1, column=1, sticky="ew")
+        self.query_picker.bind("<Button-1>", self._open_query_dropdown, add="+")
         ttk.Label(left, text="Max Results").grid(row=2, column=0, sticky="w", padx=(0, 8), pady=(6, 0))
         ttk.Spinbox(left, from_=25, to=1000, textvariable=self.max_results_var, width=10).grid(
             row=2, column=1, sticky="w", pady=(6, 0)
@@ -134,8 +140,15 @@ class GmailOrganizerApp(tk.Tk):
         relabel = ttk.Frame(root)
         relabel.pack(fill="x", pady=(0, 10))
         ttk.Label(relabel, text="Relabel Source").pack(side="left")
-        self.source_label_picker = ttk.Combobox(relabel, textvariable=self.source_label_var, state="readonly", width=30)
+        self.source_label_picker = ttk.Combobox(
+            relabel,
+            textvariable=self.source_label_var,
+            state="readonly",
+            width=30,
+            postcommand=self.refresh_labels,
+        )
         self.source_label_picker.pack(side="left", padx=8)
+        self.source_label_picker.bind("<Button-1>", self._open_source_dropdown, add="+")
         self.preview_relabel_btn = ttk.Button(relabel, text="Preview Relabel", command=self.preview_relabel)
         self.preview_relabel_btn.pack(side="left")
         self.apply_relabel_btn = ttk.Button(relabel, text="Apply Relabel", command=self.apply_relabel)
@@ -204,13 +217,23 @@ class GmailOrganizerApp(tk.Tk):
         self.query_options = merged
         self.query_picker["values"] = self.query_options
 
+    def _refresh_query_picker_values(self) -> None:
+        cfg = self._load_config()
+        self._sync_query_dropdown(cfg)
+
+    def _open_query_dropdown(self, _event=None):
+        self.after(1, lambda: self.query_picker.event_generate("<Down>"))
+
+    def _open_source_dropdown(self, _event=None):
+        self.after(1, lambda: self.source_label_picker.event_generate("<Down>"))
+
     def apply_visual_prefs(self) -> None:
         theme = self.theme_var.get().strip()
         if theme in set(self.style.theme_names()):
             self.style.theme_use(theme)
         size = max(9, min(18, int(self.font_size_var.get())))
-        self.activity_table.configure(style="Treeview")
-        self.option_add("*Font", f"Segoe UI {size}")
+        self.style.configure("Treeview", font=("Segoe UI", size), rowheight=size + 14)
+        self.style.configure("Treeview.Heading", font=("Segoe UI", max(9, size - 1), "bold"))
 
     def on_theme_changed(self, _event=None) -> None:
         self.apply_visual_prefs()
@@ -402,6 +425,7 @@ class GmailOrganizerApp(tk.Tk):
         self.source_label_picker["values"] = labels
         if labels and self.source_label_var.get() not in labels:
             self.source_label_var.set(labels[0])
+        return None
 
     def _ensure_connected(self) -> bool:
         if self.service is not None:
